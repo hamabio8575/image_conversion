@@ -13,7 +13,7 @@ brightness_factor_range_end = float(df['명도'][0].split("~")[1])
 path_df = pd.read_excel("이미지경로.xlsx")
 for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist():  # 엑셀 받아오기
     print(f'원본폴더경로 : ' + orginal_path.split("\\")[-1])
-
+    print(orginal_path)
     ### 이미지,채도,명도
     resize_factor = random.uniform(0.80, 0.99)
     random_change_color = random.uniform(change_color_range_start, change_color_range_end)
@@ -44,6 +44,8 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
         if 'txt' not in image_file_name:  # txt 파일 제외한 이미지들만
             file_cnt += 1
             print(image_file_name)
+            print(1)
+            print(orginal_path)
             image_path = os.path.join(orginal_path, image_file_name)
             image = Image.open(image_path).convert('RGBA')  # 선택한 이미지 객체 생성
             width, height = image.size  # 선택한 이미지 크기 확인
@@ -61,6 +63,8 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
             resized_image = utils.insert_logo(logo_position, sample_region, resized_image, logo_resize_factor, new_width)
 
             ### 2. 사진번호 삽입(텍스트) 및 3. 하단 텍스트 삽입
+            print(2)
+            print(orginal_path)
             description_text = utils.get_description(image_file_name, orginal_path)
             final_image = utils.add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height,
                                    description_text)

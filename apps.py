@@ -29,8 +29,7 @@ try:
         # 테두리 - 보더
         folder_image_list = os.listdir('border_images')
         border_image_path = f"border_images\\{random.choice(folder_image_list)}"
-        border_thickness = random.randint(int(df['테두리'].split("~")[0]),
-                                          int(df['테두리'].split("~")[1]))  # Adjust the thickness of the border
+        border_thickness = random.randint(int(df['테두리'][0].split("~")[0]), int(df['테두리'][0].split("~")[1]))  # Adjust the thickness of the border
 
         ### 로고
         logo_position = (50, 50)

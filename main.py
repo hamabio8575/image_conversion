@@ -28,7 +28,7 @@ class MyWindow(QtWidgets.QMainWindow, QMessageBox, form_class):
         qqq = threading.Thread(target=password_check.password_check_run, args=(model,))
         qqq.start()
 
-    def password_check_btn(self):
+    def start_button(self):
         qqq = threading.Thread(target=apps.go_run, args=(model,))
         qqq.start()
 

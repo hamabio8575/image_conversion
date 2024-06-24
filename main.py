@@ -1,6 +1,6 @@
 from moduls import *
 import password_check
-import apps
+import downloaders
 import subprocess
 
 # GitHub에서 최신 스크립트 다운로드 및 로드
@@ -34,7 +34,7 @@ class MyWindow(QtWidgets.QMainWindow, QMessageBox, form_class):
         qqq.start()
 
     def start_button(self):
-        qqq = threading.Thread(target=apps.go_run, args=(model,))
+        qqq = threading.Thread(target=downloaders.go_run, args=(model,))
         qqq.start()
 
 if __name__ == "__main__":

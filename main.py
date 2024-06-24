@@ -1,6 +1,11 @@
 from moduls import *
 import password_check
 import apps
+import subprocess
+
+# GitHub에서 최신 스크립트 다운로드 및 로드
+subprocess.call(['python', 'downloaders.py'])
+
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """

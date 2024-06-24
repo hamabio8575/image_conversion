@@ -67,7 +67,7 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
             print(orginal_path)
             description_text = utils.get_description(image_file_name, orginal_path)
             final_image = utils.add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height,
-                                   description_text)
+                                   orginal_path)
 
             update_dir_path = utils.make_update_dir(save_path, keyword)
             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png')

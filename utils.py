@@ -113,7 +113,7 @@ def get_description(image_file_name, orginal_path):
     return description_text
 
 # 사진번호 및 하단 텍스트 삽입
-def add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height, description_text):
+def add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height, orginal_path):
     # 드로잉 객체 생성
     draw_resized = ImageDraw.Draw(resized_image)
 

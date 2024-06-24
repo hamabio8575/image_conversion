@@ -6,6 +6,7 @@ def go_run(model):
 
     # try:
     print("■ 이미지 수정을 시작합니다..")
+    model.textBrowser.append("■ 이미지 수정을 시작합니다..")
     df = pd.read_excel("이미지 수정 세팅.xlsx")
     change_color_range_start = float(df['채도'][0].split("~")[0])
     change_color_range_end = float(df['채도'][0].split("~")[1])
@@ -15,7 +16,6 @@ def go_run(model):
     path_df = pd.read_excel("이미지경로.xlsx")
     for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist():  # 엑셀 받아오기
         print(f'원본폴더경로 : ' + orginal_path.split("\\")[-1])
-        print(orginal_path)
         ### 이미지,채도,명도
         resize_factor = random.uniform(0.80, 0.99)
         random_change_color = random.uniform(change_color_range_start, change_color_range_end)
@@ -69,7 +69,7 @@ def go_run(model):
 
                 update_dir_path = utils.make_update_dir(save_path, keyword)
                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png')
-
+        model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")
     print('★ 모든 이미지 변환 완료')
 
     # except Exception as e:

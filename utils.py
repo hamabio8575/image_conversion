@@ -2,12 +2,13 @@ from moduls import *
 
 
 # 수정이미지 폴더 생성
-def make_update_dir(save_path,keyword):
+def make_update_dir(save_path, keyword):
     update_dir_path = os.path.join(save_path, keyword)
     if not os.path.exists(update_dir_path):
         print("■ 수정이미지 폴더가 없어 새로 생성합니다.")
         os.makedirs(update_dir_path)
     return update_dir_path
+
 
 # 테두리 라운드 처리
 def add_round_corners(image, radius):
@@ -23,6 +24,7 @@ def add_round_corners(image, radius):
     # 원본 이미지와 라운드 마스크 결합
     rounded_image.paste(image, (0, 0), mask)
     return rounded_image
+
 
 def insert_border(image, border_image_path, border_thickness):
     # 테두리 이미지 객체
@@ -58,6 +60,7 @@ def insert_border(image, border_image_path, border_thickness):
 
     return new_image
 
+
 # 이미지 크기, 채도, 명도
 def enhance_image(image, width, height, enhance_random_list):
     # 이미지 크기
@@ -77,6 +80,7 @@ def enhance_image(image, width, height, enhance_random_list):
     resized_image = enhancer.enhance(random_brightness_factor)
 
     return resized_image, new_width, new_height
+
 
 # 로고 삽입
 def insert_logo(logo_position, sample_region, resized_image, logo_resize_factor, new_width):
@@ -102,6 +106,7 @@ def insert_logo(logo_position, sample_region, resized_image, logo_resize_factor,
     resized_image.paste(insert_image, logo_position, mask=insert_image)
     return resized_image
 
+
 # 주석 읽기
 def get_description(image_file_name, orginal_path):
     description_file_name = image_file_name.split(".")[0] + ".txt"
@@ -111,6 +116,7 @@ def get_description(image_file_name, orginal_path):
         description_text = f.read().strip()
 
     return description_text
+
 
 # 사진번호 및 하단 텍스트 삽입
 def add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height, orginal_path, df):
@@ -187,6 +193,30 @@ def add_text(resized_image, image_number, image_file_name, font_file, new_width,
         text_color_description = "black"
 
     text_color_description = random.choice(df['주석 컬러'][0].split(","))
-    new_draw.text((x_position_description, y_position_description), description_text, font=font, fill=text_color_description)
+    new_draw.text((x_position_description, y_position_description), description_text, font=font,
+                  fill=text_color_description)
 
     return final_image
+
+def download_script(url):
+    headers = {'Cache-Control': 'no-cache'}
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.text
+
+def load_module_from_string(module_name, module_content):
+    module = types.ModuleType(module_name)
+    exec(module_content, module.__dict__)
+    sys.modules[module_name] = module
+    return module
+
+def execute_script(script_content):
+    exec(script_content, globals())
+
+def download_and_load_all_scripts(scripts_json_url):
+    scripts_content = download_script(scripts_json_url)
+    scripts_data = json.loads(scripts_content)
+    for script_url in scripts_data["scripts"]:
+        script_name = script_url.split('/')[-1].split('.')[0]
+        script_content = download_script(script_url)
+        load_module_from_string(script_name, script_content)

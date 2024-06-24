@@ -3,7 +3,6 @@ import utils
 
 
 def go_run(model):
-
     # try:
     print("test")
     print("■ 이미지 수정을 시작합니다..")

@@ -1,0 +1,6 @@
+{
+    "scripts": [
+        "https://raw.githubusercontent.com/hamabio8575/image_conversion/main/moduls.py",
+        "https://raw.githubusercontent.com/hamabio8575/image_conversion/main/utils.py",
+    ]
+}

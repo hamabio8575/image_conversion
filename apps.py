@@ -61,8 +61,6 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
             resized_image = utils.insert_logo(logo_position, sample_region, resized_image, logo_resize_factor, new_width)
 
             ### 2. 사진번호 삽입(텍스트) 및 3. 하단 텍스트 삽입
-            print(2)
-            print(orginal_path)
             description_text = utils.get_description(image_file_name, orginal_path)
             final_image = utils.add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height,
                                    orginal_path, df)

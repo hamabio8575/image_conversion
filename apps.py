@@ -44,8 +44,6 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
         if 'txt' not in image_file_name:  # txt 파일 제외한 이미지들만
             file_cnt += 1
             print(image_file_name)
-            print(1)
-            print(orginal_path)
             image_path = os.path.join(orginal_path, image_file_name)
             image = Image.open(image_path).convert('RGBA')  # 선택한 이미지 객체 생성
             width, height = image.size  # 선택한 이미지 크기 확인
@@ -67,7 +65,7 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
             print(orginal_path)
             description_text = utils.get_description(image_file_name, orginal_path)
             final_image = utils.add_text(resized_image, image_number, image_file_name, font_file, new_width, new_height,
-                                   orginal_path)
+                                   orginal_path, df)
 
             update_dir_path = utils.make_update_dir(save_path, keyword)
             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png')

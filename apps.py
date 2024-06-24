@@ -6,6 +6,7 @@ def go_run(model):
     # try:
     print("test11")
     print("■ 이미지 수정을 시작합니다..")
+
     model.textBrowser.append("■ 이미지 수정을 시작합니다..")
     df = pd.read_excel("이미지 수정 세팅.xlsx")
     change_color_range_start = float(df['채도'][0].split("~")[0])

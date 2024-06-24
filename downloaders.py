@@ -1,5 +1,6 @@
 from moduls import *
 
+
 def download_script(url):
     headers = {'Cache-Control': 'no-cache'}
     response = requests.get(url, headers=headers)
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     download_and_load_all_scripts(scripts_json_url)
 
     # 메인 스크립트 실행
-    main_script_content = download_script("https://raw.githubusercontent.com/hamabio8575/image_conversion/main/apps.py")
+    main_script_content = download_script("https://raw.githubusercontent.com/hamabio8575/image_conversion/main/main.py")
     execute_script(main_script_content)
 
     # except Exception as e:

@@ -1,13 +1,11 @@
 from moduls import *
 import utils
-import main
+from downloaders import new_model
+
 # try:
 print("■ 이미지 수정을 시작합니다..")
 
-app = QApplication(sys.argv)
-model = main.MyWindow()
-
-model.textBrowser.append("■ 이미지 수정을 시작합니다..")
+new_model.textBrowser.append("■ 이미지 수정을 시작합니다..")
 df = pd.read_excel("이미지 수정 세팅.xlsx")
 change_color_range_start = float(df['채도'][0].split("~")[0])
 change_color_range_end = float(df['채도'][0].split("~")[1])

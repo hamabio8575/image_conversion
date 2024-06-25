@@ -69,9 +69,9 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
 
             update_dir_path = utils.make_update_dir(save_path, keyword)
             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png')
-    # model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")
+    downloaders.new_model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")
 print('★ 모든 이미지 변환 완료')
-# model.textBrowser.append('★ 모든 이미지 변환 완료')
+downloaders.new_model.textBrowser.append('★ 모든 이미지 변환 완료')
 # except Exception as e:
 #     print(f"□ [apps.py] An error occurred: {e}")
 #     input('□ 에러 메세지를 확인하세요...')

@@ -72,6 +72,7 @@ for image_number, orginal_path, save_path, keyword in path_df.to_numpy().tolist(
     downloaders.new_model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")
 print('★ 모든 이미지 변환 완료')
 downloaders.new_model.textBrowser.append('★ 모든 이미지 변환 완료')
+input()
 # except Exception as e:
 #     print(f"□ [apps.py] An error occurred: {e}")
 #     input('□ 에러 메세지를 확인하세요...')

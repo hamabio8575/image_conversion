@@ -5,7 +5,7 @@ from moduls import *
 def make_update_dir(save_path, keyword):
     update_dir_path = os.path.join(save_path, keyword)
     if not os.path.exists(update_dir_path):
-        print("■ 수정이미지 폴더가 없어 새로 생성합니다.")
+        print("■ 자동업로드 또는 하위 폴더가 없어 새로 생성합니다.")
         os.makedirs(update_dir_path)
     return update_dir_path
 

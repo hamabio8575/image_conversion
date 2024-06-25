@@ -21,7 +21,7 @@ def password_check_run(model):
     df_db = pd.DataFrame(rows, columns=header)  # 데이터프레임으로 변환
 
     if model.lineEdit_11.text() == df_db['password'][0]:
-        print("성공")
+        print("로그인 성공")
         model.label_14.setText("로그인 성공")
         model.label.setText("")
         model.tab_2.setDisabled(False)

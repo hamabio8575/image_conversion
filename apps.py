@@ -1,6 +1,7 @@
 from moduls import *
 import utils
-from password_check import new_model
+
+global new_model
 
 # try:
 print("■ 이미지 수정을 시작합니다..")

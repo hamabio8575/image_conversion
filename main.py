@@ -24,7 +24,7 @@ class MyWindow(QtWidgets.QMainWindow, QMessageBox, form_class):
         super().__init__()
         self.setupUi(self)
 
-        self.tab_2.setDisabled(True)
+        # self.tab_2.setDisabled(True)
         self.pushButton_9.clicked.connect(self.password_check_btn)
         self.pushButton_3.clicked.connect(self.start_button)
 

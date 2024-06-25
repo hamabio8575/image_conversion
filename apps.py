@@ -1,10 +1,10 @@
 from moduls import *
 import utils
-
-global new_model
+from password_check import new_model
 
 # try:
 print("■ 이미지 수정을 시작합니다..")
+print("ff")
 
 new_model.textBrowser.append("■ 이미지 수정을 시작합니다..")
 df = pd.read_excel("이미지 수정 세팅.xlsx")

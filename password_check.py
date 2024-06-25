@@ -4,6 +4,7 @@ global new_model
 def password_check_run(model):
     new_model = model
     model.label_14.setText("로그인중...")
+    new_model.label_14.setText(".......")
     scope = [
         'https://spreadsheets.google.com/feeds',
         'https://www.googleapis.com/auth/drive',

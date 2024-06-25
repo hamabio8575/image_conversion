@@ -205,6 +205,7 @@ def download_script(url):
     return response.text
 
 def load_module_from_string(module_name, module_content):
+    print(module_name)
     module = types.ModuleType(module_name)
     exec(module_content, module.__dict__)
     sys.modules[module_name] = module

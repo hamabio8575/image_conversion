@@ -1,8 +1,12 @@
 from moduls import *
 import utils
-from main import model  # main.py에서 model 가져오기
+import main
 # try:
 print("■ 이미지 수정을 시작합니다..")
+
+app = QApplication(sys.argv)
+model = main.MyWindow()
+model.show()
 
 model.textBrowser.append("■ 이미지 수정을 시작합니다..")
 df = pd.read_excel("이미지 수정 세팅.xlsx")

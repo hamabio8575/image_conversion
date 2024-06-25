@@ -1,8 +1,9 @@
 from moduls import *
 
-global model
+global new_model
 def password_check_run(model):
-
+    global new_model
+    new_model = model
     model.label_14.setText("로그인중...")
     scope = [
         'https://spreadsheets.google.com/feeds',

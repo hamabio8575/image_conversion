@@ -6,7 +6,6 @@ print("■ 이미지 수정을 시작합니다..")
 
 app = QApplication(sys.argv)
 model = main.MyWindow()
-model.show()
 
 model.textBrowser.append("■ 이미지 수정을 시작합니다..")
 df = pd.read_excel("이미지 수정 세팅.xlsx")

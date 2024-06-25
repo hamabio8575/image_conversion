@@ -2,7 +2,7 @@ from moduls import *
 import utils
 
 # try:
-print("test11")
+print("test22")
 print("■ 이미지 수정을 시작합니다..")
 
 # model.textBrowser.append("■ 이미지 수정을 시작합니다..")

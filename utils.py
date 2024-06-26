@@ -220,6 +220,8 @@ def save_quality(final_image, update_dir_path, file_cnt, quality, format='JPEG')
             print(f"quality 옵션 {quality}")
 
         if format.upper() == 'JPEG':
+            if final_image.mode == 'RGBA':
+                final_image = final_image.convert('RGB')
             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality)
         elif format.upper() == 'PNG':
             compress_level = 9 - int(quality / 10)  # quality 값을 압축 수준으로 변환

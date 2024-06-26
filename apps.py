@@ -4,7 +4,6 @@ import downloaders
 
 # try:
 print("■ 이미지 수정을 시작합니다..")
-print("test11")
 
 downloaders.new_model.textBrowser.append("■ 이미지 수정을 시작합니다..")
 df = pd.read_excel("이미지 수정 세팅.xlsx")
@@ -75,6 +74,7 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check in path_
             utils.save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, exif_bytes, format='JPEG')
 
     downloaders.new_model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")
+    print()
 print('★ 모든 이미지 변환 완료')
 downloaders.new_model.textBrowser.append('★ 모든 이미지 변환 완료')
 input()

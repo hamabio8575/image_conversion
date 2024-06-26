@@ -15,7 +15,7 @@ brightness_factor_range_end = float(df['명도'][0].split("~")[1])
 
 path_df = pd.read_excel("이미지경로.xlsx")
 path_df = path_df.replace(np.nan, '')
-for image_number, orginal_path, save_path, keyword, quality in path_df.to_numpy().tolist():  # 엑셀 받아오기
+for image_number, orginal_path, save_path, keyword, quality, exif_check in path_df.to_numpy().tolist():  # 엑셀 받아오기
     print(f'원본폴더경로 : ' + orginal_path.split("\\")[-1])
     ### 이미지,채도,명도
     resize_factor = random.uniform(0.80, 0.99)
@@ -51,6 +51,22 @@ for image_number, orginal_path, save_path, keyword, quality in path_df.to_numpy(
             image = Image.open(image_path).convert('RGBA')  # 선택한 이미지 객체 생성
             width, height = image.size  # 선택한 이미지 크기 확인
 
+            ### exif 데이터 얻기
+            def exif_keep(image):
+                # 이미지 열기
+
+                # EXIF 데이터 읽기
+                exif_data = image.info.get('exif')
+                if exif_data is None:
+                    return None
+
+                # EXIF 데이터를 딕셔너리로 변환
+                exif_dict = piexif.load(exif_data)
+                # EXIF 데이터를 바이너리 형태로 변환
+                exif_bytes = piexif.dump(exif_dict)
+                return exif_bytes
+            exif_bytes = exif_keep(image)
+
             ### 테두리
             if border == 'round':
                 resized_image = utils.add_round_corners(image, radius)
@@ -69,7 +85,7 @@ for image_number, orginal_path, save_path, keyword, quality in path_df.to_numpy(
                                    orginal_path, df)
 
             update_dir_path = utils.make_update_dir(save_path, keyword)
-            utils.save_quality(final_image, update_dir_path, file_cnt, quality, format='JPEG')
+            utils.save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, exif_bytes, format='JPEG')
 
     downloaders.new_model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")
 print('★ 모든 이미지 변환 완료')

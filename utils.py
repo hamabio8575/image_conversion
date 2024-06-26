@@ -200,12 +200,14 @@ def add_text(resized_image, image_number, image_file_name, font_file, new_width,
 
 
 # 이미지 품질 낮춰서 저장
-def save_quality(final_image, update_dir_path, file_cnt, quality, format='JPEG'):
+def save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, exif_bytes, format='JPEG'):
     if quality == "":  # quality가 문자열이면 100으로 판단하고 quality 옵션 없이 저장
         print("str")
         print("quality 옵션 없이 저장")
-        final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
-
+        if exif_check == '보존':
+            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
+        else:
+            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
     else:
         quality = int(float(quality))
         print("not str")
@@ -222,9 +224,34 @@ def save_quality(final_image, update_dir_path, file_cnt, quality, format='JPEG')
         if format.upper() == 'JPEG':
             if final_image.mode == 'RGBA':
                 final_image = final_image.convert('RGB')
-            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality)
+            if exif_check == '보존':
+                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality, exif=exif_bytes)
+            else:
+                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality)
         elif format.upper() == 'PNG':
             compress_level = 9 - int(quality / 10)  # quality 값을 압축 수준으로 변환
-            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level)
+            if exif_check == '보존':
+                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level, exif=exif_bytes)
+            else:
+                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level)
         else:
-            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
+            if exif_check == '보존':
+                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
+            else:
+                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
+
+
+# exif 데이터 얻기
+def get_exif_data(image_path):
+    # 이미지 열기
+    image = Image.open(image_path)
+
+    # EXIF 데이터 읽기
+    exif_data = image.info.get('exif')
+    if exif_data is None:
+        return None
+
+    # EXIF 데이터를 딕셔너리로 변환
+    exif_dict = piexif.load(exif_data)
+
+    return exif_dict

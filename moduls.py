@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import random
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageStat
 import os, sys, types, json

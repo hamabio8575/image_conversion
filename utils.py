@@ -198,4 +198,24 @@ def add_text(resized_image, image_number, image_file_name, font_file, new_width,
 
     return final_image
 
+# 이미지 품질 낮춰서 저장
+def save_quality(final_image, update_dir_path, file_cnt, quality):
+    if quality == "":  # quality가 문자열이면 100으로 판단하고 quality 옵션 없이 저장
+        print("str")
+        print("quality 옵션 없이 저장")
+        final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png')
 
+    else:
+        quality = int(float(quality))
+        print("not str")
+        if quality > 95:
+            quality = 95
+            print(quality)
+            print(f"quality 옵션 {quality}")
+
+        elif quality < 96:
+            quality = int(quality)
+            print(quality)
+            print(f"quality 옵션 {quality}")
+
+        final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', quality=quality)

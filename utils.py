@@ -204,7 +204,9 @@ def save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, ex
     if quality == "":  # quality가 문자열이면 100으로 판단하고 quality 옵션 없이 저장
         print("str")
         print("quality 옵션 없이 저장")
-        if exif_check == '보존':
+        if format.upper() == 'JPEG' and final_image.mode == 'RGBA':
+            final_image = final_image.convert('RGB')
+        if exif_check == '보존' and exif_bytes:
             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
         else:
             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
@@ -241,10 +243,9 @@ def save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, ex
                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
 
 
-# exif 데이터 얻기
-def get_exif_data(image_path):
+### exif 데이터 얻기
+def exif_keep(image):
     # 이미지 열기
-    image = Image.open(image_path)
 
     # EXIF 데이터 읽기
     exif_data = image.info.get('exif')
@@ -253,5 +254,6 @@ def get_exif_data(image_path):
 
     # EXIF 데이터를 딕셔너리로 변환
     exif_dict = piexif.load(exif_data)
-
-    return exif_dict
+    # EXIF 데이터를 바이너리 형태로 변환
+    exif_bytes = piexif.dump(exif_dict)
+    return exif_bytes

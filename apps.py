@@ -52,20 +52,7 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check in path_
             width, height = image.size  # 선택한 이미지 크기 확인
 
             ### exif 데이터 얻기
-            def exif_keep(image):
-                # 이미지 열기
-
-                # EXIF 데이터 읽기
-                exif_data = image.info.get('exif')
-                if exif_data is None:
-                    return None
-
-                # EXIF 데이터를 딕셔너리로 변환
-                exif_dict = piexif.load(exif_data)
-                # EXIF 데이터를 바이너리 형태로 변환
-                exif_bytes = piexif.dump(exif_dict)
-                return exif_bytes
-            exif_bytes = exif_keep(image)
+            exif_bytes = utils.exif_keep(image)
 
             ### 테두리
             if border == 'round':

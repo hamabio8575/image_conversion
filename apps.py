@@ -53,7 +53,8 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check in path_
 
             ### exif 데이터 얻기
             exif_bytes = utils.exif_keep(image)
-
+            print(exif_bytes)
+            input()
             ### 테두리
             if border == 'round':
                 resized_image = utils.add_round_corners(image, radius)

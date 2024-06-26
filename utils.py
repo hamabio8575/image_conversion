@@ -201,46 +201,75 @@ def add_text(resized_image, image_number, image_file_name, font_file, new_width,
 
 # 이미지 품질 낮춰서 저장
 def save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, exif_bytes, format='JPEG'):
-    if quality == "":  # quality가 문자열이면 100으로 판단하고 quality 옵션 없이 저장
-        print("str")
-        print("quality 옵션 없이 저장")
-        if format.upper() == 'JPEG' and final_image.mode == 'RGBA':
-            final_image = final_image.convert('RGB')
-        if exif_check == '보존' and exif_bytes:
-            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
-        else:
-            final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
+    # 품질 설정
+    if quality == "":
+        quality = 100
     else:
         quality = int(float(quality))
-        print("not str")
-        if quality > 95:
-            quality = 95
-            print(quality)
-            print(f"quality 옵션 {quality}")
+        quality = min(max(quality, 1), 95)
 
-        elif quality < 96:
-            quality = int(quality)
-            print(quality)
-            print(f"quality 옵션 {quality}")
+    # 이미지 모드 변환 (JPEG 형식의 경우)
+    if format.upper() == 'JPEG' and final_image.mode == 'RGBA':
+        final_image = final_image.convert('RGB')
 
-        if format.upper() == 'JPEG':
-            if final_image.mode == 'RGBA':
-                final_image = final_image.convert('RGB')
-            if exif_check == '보존':
-                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality, exif=exif_bytes)
-            else:
-                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality)
-        elif format.upper() == 'PNG':
-            compress_level = 9 - int(quality / 10)  # quality 값을 압축 수준으로 변환
-            if exif_check == '보존':
-                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level, exif=exif_bytes)
-            else:
-                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level)
-        else:
-            if exif_check == '보존':
-                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
-            else:
-                final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
+    # 파일 경로 설정
+    file_path = f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}'
+
+    # 저장 옵션 설정
+    save_options = {}
+    if exif_check == '보존' and exif_bytes:
+        save_options['exif'] = exif_bytes
+
+    if format.upper() == 'JPEG':
+        save_options['quality'] = quality
+    elif format.upper() == 'PNG':
+        save_options['compress_level'] = 9 - int(quality / 10)
+
+    # 이미지 저장
+    final_image.save(file_path, **save_options)
+
+
+# def save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, exif_bytes, format='JPEG'):
+#     if quality == "":  # quality가 문자열이면 100으로 판단하고 quality 옵션 없이 저장
+#         print("str")
+#         print("quality 옵션 없이 저장")
+#         if format.upper() == 'JPEG' and final_image.mode == 'RGBA':
+#             final_image = final_image.convert('RGB')
+#         if exif_check == '보존' and exif_bytes:
+#             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
+#         else:
+#             final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
+#     else:
+#         quality = int(float(quality))
+#         print("not str")
+#         if quality > 95:
+#             quality = 95
+#             print(quality)
+#             print(f"quality 옵션 {quality}")
+#
+#         elif quality < 96:
+#             quality = int(quality)
+#             print(quality)
+#             print(f"quality 옵션 {quality}")
+#
+#         if format.upper() == 'JPEG':
+#             if final_image.mode == 'RGBA':
+#                 final_image = final_image.convert('RGB')
+#             if exif_check == '보존':
+#                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality, exif=exif_bytes)
+#             else:
+#                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).jpeg', quality=quality)
+#         elif format.upper() == 'PNG':
+#             compress_level = 9 - int(quality / 10)  # quality 값을 압축 수준으로 변환
+#             if exif_check == '보존':
+#                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level, exif=exif_bytes)
+#             else:
+#                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).png', compress_level=compress_level)
+#         else:
+#             if exif_check == '보존':
+#                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}', exif=exif_bytes)
+#             else:
+#                 final_image.save(f'{update_dir_path}\\이미지 ({file_cnt}).{format.lower()}')
 
 
 ### exif 데이터 얻기

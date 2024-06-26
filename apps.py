@@ -73,6 +73,7 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check in path_
                                    orginal_path, df)
 
             update_dir_path = utils.make_update_dir(save_path, keyword)
+
             utils.save_quality(final_image, update_dir_path, file_cnt, quality, exif_check, exif_bytes, format='JPEG')
 
     downloaders.new_model.textBrowser.append("■ " + orginal_path.split("\\")[-1] + " 완료")

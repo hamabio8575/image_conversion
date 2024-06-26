@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import random
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageStat
+import piexif
 import os, sys, types, json
 from datetime import datetime
 import time

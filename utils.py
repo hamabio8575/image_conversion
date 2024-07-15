@@ -111,6 +111,11 @@ def insert_logo(logo_position, sample_region, resized_image, logo_resize_factor,
 def get_description(image_file_name, orginal_path):
     description_file_name = image_file_name.split(".")[0] + ".txt"
     description_path = os.path.join(orginal_path, description_file_name)
+    # 주석 파일이 있는지 체크
+    # 없으면 빈문자열 return
+    if description_file_name not in os.listdir(original_path):
+        description_text = ""
+        return description_text
 
     with open(description_path, "r", encoding='UTF-8') as f:
         description_text = f.read().strip()
@@ -156,47 +161,49 @@ def add_text(resized_image, image_number, image_file_name, font_file, new_width,
 
     # 하단 주석 삽입
     description_text = get_description(image_file_name, orginal_path)  # 주석
-
-    font_size_percent = 0.2  # 폰트 크기 비율 설정
-    font_size = int(new_width * font_size_percent)
-    font = ImageFont.truetype(f"font_files/{font_file}", font_size, encoding="UTF-8")
-
-    description_bbox = draw_resized.textbbox((0, 0), description_text, font=font)
-    description_width = description_bbox[2] - description_bbox[0]
-    description_height = description_bbox[3] - description_bbox[1]
-
-    while description_width > 0.9 * new_width:  # 주석 텍스트의 너비가 이미지 너비의 80%를 넘지 않도록
-        font_size -= 1
+    if description_text == "":
+        return draw_resized
+    else:
+        font_size_percent = 0.2  # 폰트 크기 비율 설정
+        font_size = int(new_width * font_size_percent)
         font = ImageFont.truetype(f"font_files/{font_file}", font_size, encoding="UTF-8")
+
         description_bbox = draw_resized.textbbox((0, 0), description_text, font=font)
         description_width = description_bbox[2] - description_bbox[0]
         description_height = description_bbox[3] - description_bbox[1]
 
-    margin = 20
-    padding = 10
-    final_image_height = new_height + description_height + margin + padding * 2
+        while description_width > 0.9 * new_width:  # 주석 텍스트의 너비가 이미지 너비의 80%를 넘지 않도록
+            font_size -= 1
+            font = ImageFont.truetype(f"font_files/{font_file}", font_size, encoding="UTF-8")
+            description_bbox = draw_resized.textbbox((0, 0), description_text, font=font)
+            description_width = description_bbox[2] - description_bbox[0]
+            description_height = description_bbox[3] - description_bbox[1]
 
-    final_image = Image.new("RGBA", (new_width, final_image_height), "white")
-    final_image.paste(resized_image, (0, 0))
+        margin = 20
+        padding = 10
+        final_image_height = new_height + description_height + margin + padding * 2
 
-    new_draw = ImageDraw.Draw(final_image)
-    x_position_description = (new_width - description_width) // 2
-    y_position_description = new_height + margin + padding
+        final_image = Image.new("RGBA", (new_width, final_image_height), "white")
+        final_image.paste(resized_image, (0, 0))
 
-    region = final_image.crop((0, new_height - 150, new_width, new_height))
-    stat = ImageStat.Stat(region)
-    brightness = stat.mean[0]
+        new_draw = ImageDraw.Draw(final_image)
+        x_position_description = (new_width - description_width) // 2
+        y_position_description = new_height + margin + padding
 
-    if brightness < 100:
-        text_color_description = "white"
-    else:
-        text_color_description = "black"
+        region = final_image.crop((0, new_height - 150, new_width, new_height))
+        stat = ImageStat.Stat(region)
+        brightness = stat.mean[0]
 
-    text_color_description = random.choice(df['주석 컬러'][0].split(","))
-    new_draw.text((x_position_description, y_position_description), description_text, font=font,
-                  fill=text_color_description)
+        if brightness < 100:
+            text_color_description = "white"
+        else:
+            text_color_description = "black"
 
-    return final_image
+        text_color_description = random.choice(df['주석 컬러'][0].split(","))
+        new_draw.text((x_position_description, y_position_description), description_text, font=font,
+                      fill=text_color_description)
+
+        return final_image
 
 
 # 이미지 품질 낮춰서 저장

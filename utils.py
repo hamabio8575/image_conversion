@@ -113,7 +113,7 @@ def get_description(image_file_name, orginal_path):
     description_path = os.path.join(orginal_path, description_file_name)
     # 주석 파일이 있는지 체크
     # 없으면 빈문자열 return
-    if description_file_name not in os.listdir(original_path):
+    if description_file_name not in os.listdir(orginal_path):
         description_text = ""
         return description_text
 

@@ -159,10 +159,12 @@ def add_text(resized_image, image_number, image_file_name, font_file, new_width,
 
     draw_resized.text((x_position_right, y_position), image_number, font=font, fill=text_color)
 
+
+
     # 하단 주석 삽입
     description_text = get_description(image_file_name, orginal_path)  # 주석
     if description_text == "":
-        return draw_resized
+        return resized_image
     else:
         font_size_percent = 0.2  # 폰트 크기 비율 설정
         font_size = int(new_width * font_size_percent)

@@ -14,7 +14,7 @@ brightness_factor_range_end = float(df['명도'][0].split("~")[1])
 
 path_df = pd.read_excel("이미지경로.xlsx")
 path_df = path_df.replace(np.nan, '')
-for image_number, orginal_path, save_path, keyword, quality, exif_check in path_df.to_numpy().tolist():  # 엑셀 받아오기
+for image_number, orginal_path, save_path, keyword, quality, exif_check, logo_check in path_df.to_numpy().tolist():  # 엑셀 받아오기
     orginal_path = str(orginal_path)
     save_path = str(save_path)
     print(f'원본폴더경로 : ' + orginal_path.split("\\")[-1])
@@ -64,7 +64,8 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check in path_
             resized_image, new_width, new_height = utils.enhance_image(resized_image, width, height, enhance_random_list)
 
             ### 1. 로고
-            resized_image = utils.insert_logo(logo_position, sample_region, resized_image, logo_resize_factor, new_width)
+            if logo_check == "삽입":
+                resized_image = utils.insert_logo(logo_position, sample_region, resized_image, logo_resize_factor, new_width)
 
             ### 2. 사진번호 삽입(텍스트) 및 3. 하단 텍스트 삽입
             description_text = utils.get_description(image_file_name, orginal_path)

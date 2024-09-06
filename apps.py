@@ -11,6 +11,9 @@ change_color_range_start = float(df['채도'][0].split("~")[0])
 change_color_range_end = float(df['채도'][0].split("~")[1])
 brightness_factor_range_start = float(df['명도'][0].split("~")[0])
 brightness_factor_range_end = float(df['명도'][0].split("~")[1])
+radius = float(df['라운드'][0])
+print(radius)
+input()
 
 path_df = pd.read_excel("이미지경로.xlsx")
 path_df = path_df.replace(np.nan, '')
@@ -28,7 +31,7 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check, logo_ch
     # 테두리종류 랜덤 선택
     border = random.choice(['round', 'border'])
     # 테두리 - 라운드
-    radius = random.uniform(70, 120)
+    # radius = random.uniform(70, 120)
 
     # 테두리 - 보더
     folder_image_list = os.listdir('border_images')

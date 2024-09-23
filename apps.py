@@ -45,7 +45,12 @@ for image_number, orginal_path, save_path, keyword, quality, exif_check, logo_ch
     font_list = os.listdir('font_files')
     font_file = random.choice(font_list)
     file_cnt = 0
-    for image_file_name in os.listdir(orginal_path):  # 선택폴더내에 있는 파일들
+
+    ### 이미지파일 정렬
+    image_file_list = os.listdir(orginal_path)
+    image_file_list = sorted(image_file_list, key=utils.extract_number)
+
+    for image_file_name in image_file_list:  # 선택폴더내에 있는 파일들
         if 'txt' not in image_file_name:  # txt 파일 제외한 이미지들만
             file_cnt += 1
             print(image_file_name)

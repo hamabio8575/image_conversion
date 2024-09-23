@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageStat
 import piexif
 import os, sys, types, json
 from datetime import datetime
-import time
+import time, re
 import requests
 
 import threading
